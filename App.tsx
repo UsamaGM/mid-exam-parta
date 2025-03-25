@@ -4,11 +4,13 @@ import "./App.css";
 function App() {
   const [isDark, setIsDark] = useState<string | undefined>("on");
   const [time, setTime] = useState<number>(30);
+  const [progress, setProgress] = useState<number>(0);
   const [hasRun, setHasRun] = useState(false);
 
   useEffect(() => {
     if (time > 0 && hasRun) {
-      setTimeout(() => setTime(time - 1), 1000);
+      setTimeout(() => setTime((t) => t - 1), 1000);
+      setProgress((p) => p + 1);
     }
   }, [time, hasRun]);
 
@@ -18,6 +20,7 @@ function App() {
 
   function handleReset() {
     setTime(30);
+    setHasRun(false);
   }
 
   return (
@@ -40,7 +43,7 @@ function App() {
 
       <div className="timer-section">
         <div className="progress-bar">
-          <div className="progress" id="progress"></div>
+          <div className={`progress w-[50%]`} id="progress"></div>
         </div>
         <div className="timer" id="timerDisplay">
           {time}s
