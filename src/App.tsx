@@ -4,26 +4,20 @@ import "./App.css";
 function App() {
   const [isDark, setIsDark] = useState<string | undefined>("on");
   const [time, setTime] = useState<number>(30);
-
-  let timer = null;
+  const [hasRun, setHasRun] = useState(false);
 
   useEffect(() => {
-    if (time > 0) {
-      handleTimer();
+    if (time > 0 && hasRun) {
+      setTimeout(() => setTime(time - 1), 1000);
     }
-  }, [time]);
+  }, [time, hasRun]);
 
   function handleTimer() {
-    timer = setInterval(() => {
-      setTime(time - 1);
-    }, 1000);
+    setHasRun(true);
   }
 
   function handleReset() {
     setTime(30);
-    if (timer) {
-      timer.clearInterval();
-    }
   }
 
   return (
@@ -55,11 +49,7 @@ function App() {
           <button id="startButton" onClick={handleTimer}>
             Start Timer
           </button>
-          <button
-            id="resetButton"
-            onClick={handleReset}
-            style={{ display: "none" }}
-          >
+          <button id="resetButton" onClick={handleReset}>
             Reset Timer
           </button>
         </div>
