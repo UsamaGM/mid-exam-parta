@@ -1,16 +1,44 @@
+import { useEffect, useState } from "react";
+import "./App.css";
+
 function App() {
+  const [isDark, setIsDark] = useState<string | undefined>("on");
+  const [time, setTime] = useState<number>(30);
+
+  let timer = null;
+
+  useEffect(() => {
+    if (time > 0) {
+      handleTimer();
+    }
+  }, [time]);
+
+  function handleTimer() {
+    timer = setInterval(() => {
+      setTime(time - 1);
+    }, 1000);
+  }
+
+  function handleReset() {
+    setTime(30);
+    if (timer) {
+      timer.clearInterval();
+    }
+  }
+
   return (
-    <div className="bg-container-bg p-2 border-r-[15px] w-[90%] max-w-[400px]">
-      <div className="flex justify-between items-center mb-1.5">
-        <h1 className="text-[1.6rem] m-0">Countdown & Light Switch</h1>
-        <div className="flex flex-col items-center text-[0.8rem]">
-          <label className="relative inline-block w-[50px] h-[26px] mb-[4px]">
+    <div className="container">
+      <div className="header">
+        <h1>Countdown & Light Switch</h1>
+        <div className="toggle-container">
+          <label className="toggle-switch">
             <input
               type="checkbox"
               id="themeToggle"
-              className="opacity-0 w-0 h-0"
+              value={isDark}
+              onChange={() => setIsDark(isDark === "on" ? "off" : "on")}
             />
-            <span className=""></span>
+            <span className="slider"></span>
           </label>
           <span>Light Mode</span>
         </div>
@@ -21,11 +49,17 @@ function App() {
           <div className="progress" id="progress"></div>
         </div>
         <div className="timer" id="timerDisplay">
-          30s
+          {time}s
         </div>
         <div className="btn-group">
-          <button id="startButton">Start Timer</button>
-          <button id="resetButton" style={{ display: "none" }}>
+          <button id="startButton" onClick={handleTimer}>
+            Start Timer
+          </button>
+          <button
+            id="resetButton"
+            onClick={handleReset}
+            style={{ display: "none" }}
+          >
             Reset Timer
           </button>
         </div>
