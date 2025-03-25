@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --bg-color: #1e1e1e;
+  --text-color: #f1f1f1;
+  --accent-color: #4caf50;
+  --container-bg: #2a2a2a;
+  --btn-bg: #4caf50;
+  --btn-hover: #45a049;
+}
+body.light {
+  --bg-color: #f8f8f8;
+  --text-color: #333;
+  --accent-color: #ff9800;
+  --container-bg: #fff;
+  --btn-bg: #ff9800;
+  --btn-hover: #e68900;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background 0.5s, color 0.5s;
+}
